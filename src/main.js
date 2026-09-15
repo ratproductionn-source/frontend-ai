@@ -252,7 +252,7 @@ const toolCopy = {
 let activeTool = "cv";
 let pendingVideo;
 let downloadTimer;
-let videoFileUrl;
+let downloadUrl;
 
 function showDownloadError(message) {
   downloadError.textContent = message;
@@ -273,6 +273,7 @@ function formatDuration(seconds) {
 
 function resetDownloadPanel() {
   pendingVideo = undefined;
+  downloadUrl = undefined;
   clearDownloadError();
   downloadEmpty.hidden = false;
   downloadLoading.hidden = true;
@@ -280,10 +281,8 @@ function resetDownloadPanel() {
   downloadActions.hidden = true;
   fetchButton.disabled = false;
   fetchButton.dataset.loading = "false";
-  fetchButton.querySelector("span").textContent = "GET VIDEO INFO";
+  fetchButton.querySelector("span").textContent = "GET VIDEO";
   saveVideoButton.disabled = false;
-  if (videoFileUrl) URL.revokeObjectURL(videoFileUrl);
-  videoFileUrl = undefined;
   window.clearInterval(downloadTimer);
 }
 
@@ -332,9 +331,10 @@ async function fetchVideoInfo() {
 
   clearDownloadError();
   pendingVideo = undefined;
+  downloadUrl = undefined;
   fetchButton.disabled = true;
   fetchButton.dataset.loading = "true";
-  fetchButton.querySelector("span").textContent = "FETCHING...";
+  fetchButton.querySelector("span").textContent = "PREPARING...";
   downloadEmpty.hidden = true;
   downloadReady.hidden = true;
   downloadActions.hidden = true;
@@ -342,18 +342,19 @@ async function fetchVideoInfo() {
   beginDownloadProgress("Fetching video details...");
 
   try {
-    const response = await fetch(`${API_URL}/api/download-info`, {
+    const response = await fetch(`${API_URL}/api/download-prepare`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url, platform: activeTool }),
-      signal: AbortSignal.timeout(70_000),
+      signal: AbortSignal.timeout(200_000),
     });
     const body = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(body.error || "Could not read this video.");
+    if (!response.ok || !body.token) {
+      throw new Error(body.error || "Could not prepare this video.");
     }
 
     pendingVideo = { url, platform: activeTool, ...body };
+    downloadUrl = `${API_URL}/api/download-file?token=${encodeURIComponent(body.token)}`;
     videoTitle.textContent = body.title || "Untitled video";
     videoMeta.textContent = `${activeTool === "youtube" ? "YouTube" : "TikTok"} · ${formatDuration(body.duration)}`;
     if (body.thumbnail) {
@@ -372,63 +373,32 @@ async function fetchVideoInfo() {
     downloadLoading.hidden = true;
     downloadEmpty.hidden = false;
     const timedOut = error.name === "TimeoutError" || error.name === "AbortError";
-    showDownloadError(timedOut ? "Timed out while reading this video. Please try again." : error.message);
+    showDownloadError(timedOut ? "Timed out while preparing this video. Please try again." : error.message);
   } finally {
     window.clearInterval(downloadTimer);
     fetchButton.disabled = false;
     fetchButton.dataset.loading = "false";
-    fetchButton.querySelector("span").textContent = "GET VIDEO INFO";
+    fetchButton.querySelector("span").textContent = "GET VIDEO";
   }
 }
 
-async function saveVideo() {
-  if (!pendingVideo?.url) return;
+function saveVideo() {
+  if (!downloadUrl) return;
   clearDownloadError();
   saveVideoButton.disabled = true;
-  downloadReady.hidden = true;
-  downloadActions.hidden = true;
-  downloadLoading.hidden = false;
-  beginDownloadProgress("Downloading video file...");
 
-  try {
-    const response = await fetch(`${API_URL}/api/download-file`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: pendingVideo.url, platform: pendingVideo.platform }),
-      signal: AbortSignal.timeout(200_000),
-    });
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = pendingVideo?.filename || `video.${pendingVideo?.ext || "mp4"}`;
+  link.rel = "noopener";
+  document.body.append(link);
+  link.click();
+  link.remove();
 
-    if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || "Could not download this video.");
-    }
-
-    const blob = await response.blob();
-    if (videoFileUrl) URL.revokeObjectURL(videoFileUrl);
-    videoFileUrl = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    const ext = pendingVideo.ext || "mp4";
-    link.href = videoFileUrl;
-    link.download = `${(pendingVideo.title || "video").replace(/[^\w\s.-]+/g, "").slice(0, 80) || "video"}.${ext}`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    downloadProgressBar.style.width = "100%";
-    await new Promise((resolve) => window.setTimeout(resolve, 250));
-    downloadLoading.hidden = true;
-    downloadReady.hidden = false;
-    downloadActions.hidden = false;
-  } catch (error) {
-    downloadLoading.hidden = true;
-    downloadReady.hidden = Boolean(pendingVideo);
-    downloadEmpty.hidden = !pendingVideo;
-    downloadActions.hidden = !pendingVideo;
-    const timedOut = error.name === "TimeoutError" || error.name === "AbortError";
-    showDownloadError(timedOut ? "The download took too long. Please try again." : error.message);
-  } finally {
-    window.clearInterval(downloadTimer);
+  downloadUrl = undefined;
+  window.setTimeout(() => {
     saveVideoButton.disabled = false;
-  }
+  }, 1_500);
 }
 
 toolTabs.forEach((tab) => {
