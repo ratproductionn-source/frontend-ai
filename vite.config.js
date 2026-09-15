@@ -6,7 +6,7 @@ export default defineConfig({
     host: true,
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://botseller-production.up.railway.app",
         changeOrigin: true,
       },
     },
@@ -16,7 +16,7 @@ export default defineConfig({
     host: true,
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://botseller-production.up.railway.app",
         changeOrigin: true,
       },
     },
