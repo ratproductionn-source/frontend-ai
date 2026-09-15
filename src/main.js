@@ -338,10 +338,12 @@ async function fetchVideoInfo() {
   beginDownloadProgress("Fetching video details...");
 
   try {
-    const response = await fetch(
-      `${API_URL}/api/download/info?url=${encodeURIComponent(url)}&platform=${activeTool}`,
-      { signal: AbortSignal.timeout(70_000) },
-    );
+    const response = await fetch(`${API_URL}/api/download-info`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, platform: activeTool }),
+      signal: AbortSignal.timeout(70_000),
+    });
     const body = await response.json().catch(() => ({}));
     if (!response.ok) {
       throw new Error(body.error || "Could not read this video.");
@@ -352,7 +354,7 @@ async function fetchVideoInfo() {
     videoMeta.textContent = `${activeTool === "youtube" ? "YouTube" : "TikTok"} · ${formatDuration(body.duration)}`;
     if (body.thumbnail) {
       videoThumb.hidden = false;
-      videoThumb.src = `${API_URL}/api/download/thumbnail?url=${encodeURIComponent(body.thumbnail)}`;
+      videoThumb.src = `${API_URL}/api/download-thumb?url=${encodeURIComponent(body.thumbnail)}`;
     } else {
       videoThumb.hidden = true;
       videoThumb.removeAttribute("src");
@@ -385,7 +387,7 @@ async function saveVideo() {
   beginDownloadProgress("Downloading video file...");
 
   try {
-    const response = await fetch(`${API_URL}/api/download`, {
+    const response = await fetch(`${API_URL}/api/download-file`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: pendingVideo.url, platform: pendingVideo.platform }),

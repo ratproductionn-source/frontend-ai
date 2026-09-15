@@ -4,6 +4,18 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/api/download-info",
+      "destination": "https://botseller-production.up.railway.app/api/download-info"
+    },
+    {
+      "source": "/api/download-file",
+      "destination": "https://botseller-production.up.railway.app/api/download-file"
+    },
+    {
+      "source": "/api/download-thumb",
+      "destination": "https://botseller-production.up.railway.app/api/download-thumb"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://botseller-production.up.railway.app/api/:path*"
     }
