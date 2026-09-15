@@ -22,20 +22,64 @@
         </span>
         <span>Portraitly</span>
       </a>
-      <div class="header-badge"><span></span> 3 tools · no sign-up</div>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#toolbox">Tools</a>
+        <a href="#howItWorks">How it works</a>
+      </nav>
+      <a class="header-cta" href="#toolbox">Open toolbox</a>
     </header>
 
     <main>
       <section class="hero">
-        <nav class="tools-nav reveal delay-1" aria-label="Tools">
-          <button type="button" class="tool-tab is-active" data-tool="cv">CV Photo</button>
-          <button type="button" class="tool-tab" data-tool="youtube">YouTube</button>
-          <button type="button" class="tool-tab" data-tool="tiktok">TikTok</button>
+        <div class="hero-content">
+          <div class="eyebrow reveal delay-1"><span class="eyebrow-dot"></span> YOUR EVERYDAY CREATIVE TOOLBOX</div>
+          <h1 class="reveal delay-2">Create more.<br /><em>Wait less.</em></h1>
+          <p class="hero-copy reveal delay-3">A focused set of tools for better profile photos and effortless video downloads. Fast, private, and simple to use.</p>
+          <div class="hero-actions reveal delay-4">
+            <a class="hero-button" href="#toolbox">Explore tools <svg viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a>
+            <span>No account required</span>
+          </div>
+        </div>
+        <div class="hero-showcase reveal delay-3" aria-label="Available tools">
+          <div class="showcase-orbit" aria-hidden="true"></div>
+          <article class="showcase-card showcase-main">
+            <span class="showcase-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="10" r="2.5"/><path d="M7.5 18c.5-3.2 2-4.8 4.5-4.8s4 1.6 4.5 4.8"/></svg>
+            </span>
+            <div><small>AI PORTRAIT</small><strong>CV Photo Studio</strong><p>Polished 4×6 photos in moments</p></div>
+            <span class="showcase-arrow">↗</span>
+          </article>
+          <article class="showcase-card showcase-small showcase-youtube">
+            <span class="showcase-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></span>
+            <div><small>VIDEO</small><strong>YouTube</strong></div>
+          </article>
+          <article class="showcase-card showcase-small showcase-tiktok">
+            <span class="showcase-icon"><svg viewBox="0 0 24 24"><path d="M14 4v10.5a4.5 4.5 0 1 1-4.5-4.5"/><path d="M14 4c.8 2.6 2.5 4 5 4"/></svg></span>
+            <div><small>VIDEO</small><strong>TikTok</strong></div>
+          </article>
+          <span class="privacy-chip"><svg viewBox="0 0 20 20"><rect x="4" y="8" width="12" height="9" rx="2"/><path d="M7 8V6a3 3 0 0 1 6 0v2"/></svg> Private by design</span>
+        </div>
+      </section>
+
+      <section class="toolbox-heading" id="toolbox">
+        <div class="eyebrow" id="heroEyebrow"><span class="eyebrow-line"></span> <span id="heroEyebrowText">AI CV PHOTO STUDIO</span></div>
+        <h2 id="heroTitle">Your best first <em>impression.</em></h2>
+        <p id="heroCopy">Turn any clear portrait into a polished, professional 4×6 cm CV photo in moments.</p>
+        <nav class="tools-nav" aria-label="Tools">
+          <button type="button" class="tool-tab is-active" data-tool="cv" aria-pressed="true">
+            <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><circle cx="12" cy="9" r="2.5"/><path d="M8.5 17c.4-3 1.6-4.5 3.5-4.5s3.1 1.5 3.5 4.5"/></svg></span>
+            <span><strong>CV Photo</strong><small>AI portrait studio</small></span>
+          </button>
+          <button type="button" class="tool-tab" data-tool="youtube" aria-pressed="false">
+            <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></span>
+            <span><strong>YouTube</strong><small>Video downloader</small></span>
+          </button>
+          <button type="button" class="tool-tab" data-tool="tiktok" aria-pressed="false">
+            <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M14 4v10.5a4.5 4.5 0 1 1-4.5-4.5"/><path d="M14 4c.8 2.6 2.5 4 5 4"/></svg></span>
+            <span><strong>TikTok</strong><small>Video downloader</small></span>
+          </button>
         </nav>
-        <div class="eyebrow reveal delay-1" id="heroEyebrow"><span class="eyebrow-line"></span> <span id="heroEyebrowText">AI CV PHOTO STUDIO</span></div>
-        <h1 class="reveal delay-2" id="heroTitle">Your best first<br /><em>impression.</em></h1>
-        <p class="hero-copy reveal delay-3" id="heroCopy">Turn any clear portrait into a polished, professional 4×6 cm CV photo in moments.</p>
-        <div class="trust-row reveal delay-4" id="trustRow" aria-label="Product benefits">
+        <div class="trust-row" id="trustRow" aria-label="Product benefits">
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> Identity preserved</span>
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> Print ready</span>
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> No sign-up</span>
@@ -178,10 +222,37 @@
         <span class="divider"></span>
         <div><strong>AI</strong><span>SMART EDIT</span></div>
       </section>
+
+      <section class="how-section" id="howItWorks">
+        <div class="section-heading">
+          <div class="eyebrow"><span class="eyebrow-line"></span> HOW IT WORKS</div>
+          <h2>From idea to file in <em>three steps.</em></h2>
+        </div>
+        <div class="how-grid">
+          <article>
+            <span class="how-number">01</span>
+            <span class="how-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></span>
+            <h3>Choose a tool</h3>
+            <p>Select CV Photo, YouTube, or TikTok from the toolbox.</p>
+          </article>
+          <article>
+            <span class="how-number">02</span>
+            <span class="how-icon"><svg viewBox="0 0 24 24"><path d="M8.5 12.5 12 16l7-8"/><path d="M20 12a8 8 0 1 1-4-6.9"/></svg></span>
+            <h3>Add your content</h3>
+            <p>Upload a clear photo or paste a public video link.</p>
+          </article>
+          <article>
+            <span class="how-number">03</span>
+            <span class="how-icon"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0 5-5m-5 5-5-5"/><path d="M5 20h14"/></svg></span>
+            <h3>Save your result</h3>
+            <p>Download the finished file directly to your device.</p>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer class="reveal delay-7">
-      <p><svg viewBox="0 0 18 18"><rect x="4" y="8" width="10" height="7" rx="2"/><path d="M6.5 8V6a2.5 2.5 0 0 1 5 0v2"/></svg> Your photo is processed securely and never stored on this server.</p>
+      <p><svg viewBox="0 0 18 18"><rect x="4" y="8" width="10" height="7" rx="2"/><path d="M6.5 8V6a2.5 2.5 0 0 1 5 0v2"/></svg> Your files are processed securely and never stored.</p>
       <p>© 2026 Portraitly</p>
     </footer>
 

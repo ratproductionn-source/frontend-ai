@@ -223,13 +223,13 @@ const checkIcon = '<svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg>';
 const toolCopy = {
   cv: {
     eyebrow: "AI CV PHOTO STUDIO",
-    title: "Your best first<br /><em>impression.</em>",
+    title: "Your best first <em>impression.</em>",
     copy: "Turn any clear portrait into a polished, professional 4×6 cm CV photo in moments.",
     trust: ["Identity preserved", "Print ready", "No sign-up"],
   },
   youtube: {
     eyebrow: "YOUTUBE DOWNLOADER",
-    title: "Save any<br /><em>YouTube</em> video.",
+    title: "Save any <em>YouTube video.</em>",
     copy: "Paste a YouTube link to fetch the video and download it as a file.",
     trust: ["Public videos", "No playlist", "MP4 when possible"],
     placeholder: "https://www.youtube.com/watch?v=...",
@@ -239,7 +239,7 @@ const toolCopy = {
   },
   tiktok: {
     eyebrow: "TIKTOK DOWNLOADER",
-    title: "Download <em>TikToks</em><br />in seconds.",
+    title: "Download <em>TikToks in seconds.</em>",
     copy: "Paste a TikTok link to save the video without opening the app.",
     trust: ["Public videos", "HD when available", "Direct file save"],
     placeholder: "https://www.tiktok.com/@user/video/...",
@@ -301,7 +301,11 @@ function beginDownloadProgress(message) {
 function setTool(tool) {
   activeTool = tool;
   const copy = toolCopy[tool];
-  toolTabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.tool === tool));
+  toolTabs.forEach((tab) => {
+    const isActive = tab.dataset.tool === tool;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-pressed", String(isActive));
+  });
   toolCv.hidden = tool !== "cv";
   toolDownload.hidden = tool === "cv";
   detailsStrip.hidden = tool !== "cv";
