@@ -27,17 +27,22 @@
 
     <main>
       <section class="hero">
-        <div class="eyebrow reveal delay-1"><span class="eyebrow-line"></span> AI CV PHOTO STUDIO</div>
-        <h1 class="reveal delay-2">Your best first<br /><em>impression.</em></h1>
-        <p class="hero-copy reveal delay-3">Turn any clear portrait into a polished, professional 4×6 cm CV photo in moments.</p>
-        <div class="trust-row reveal delay-4" aria-label="Product benefits">
+        <nav class="tools-nav reveal delay-1" aria-label="Tools">
+          <button type="button" class="tool-tab is-active" data-tool="cv">CV Photo</button>
+          <button type="button" class="tool-tab" data-tool="youtube">YouTube</button>
+          <button type="button" class="tool-tab" data-tool="tiktok">TikTok</button>
+        </nav>
+        <div class="eyebrow reveal delay-1" id="heroEyebrow"><span class="eyebrow-line"></span> <span id="heroEyebrowText">AI CV PHOTO STUDIO</span></div>
+        <h1 class="reveal delay-2" id="heroTitle">Your best first<br /><em>impression.</em></h1>
+        <p class="hero-copy reveal delay-3" id="heroCopy">Turn any clear portrait into a polished, professional 4×6 cm CV photo in moments.</p>
+        <div class="trust-row reveal delay-4" id="trustRow" aria-label="Product benefits">
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> Identity preserved</span>
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> Print ready</span>
           <span><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg> No sign-up</span>
         </div>
       </section>
 
-      <section class="studio reveal delay-5" aria-label="CV photo converter">
+      <section class="studio reveal delay-5" id="toolCv" aria-label="CV photo converter">
         <article class="glass-card upload-card" id="uploadCard">
           <div class="step-label"><span>01</span> ADD YOUR PHOTO</div>
 
@@ -111,7 +116,60 @@
         </article>
       </section>
 
-      <section class="details-strip reveal delay-6">
+      <section class="studio downloader reveal delay-5" id="toolDownload" hidden aria-label="Video downloader">
+        <article class="glass-card upload-card">
+          <div class="step-label"><span>01</span> <span id="downloadStepLabel">PASTE YOUTUBE LINK</span></div>
+          <input class="url-field" id="videoUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=..." />
+          <div class="tip-row">
+            <svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="8"/><path d="M11 10v5m0-8v.2"/></svg>
+            <p id="downloadTip"><strong>Public videos only</strong><br />Max 15 minutes · 80 MB · no playlists.</p>
+          </div>
+          <button class="primary-button" id="fetchButton" type="button">
+            <span>GET VIDEO INFO</span>
+            <svg viewBox="0 0 20 20"><path d="M4 10h12m-5-5 5 5-5 5"/></svg>
+          </button>
+          <p class="error-message" id="downloadError" role="alert" hidden></p>
+        </article>
+
+        <article class="glass-card result-card">
+          <div class="step-label"><span>02</span> DOWNLOAD FILE</div>
+          <div class="result-stage">
+            <div class="result-empty" id="downloadEmpty">
+              <div class="photo-outline">
+                <svg viewBox="0 0 34 34"><path d="M8 10h18v14H8z"/><path d="m14 16 8 4-8 4z"/></svg>
+                <span class="corner top-left"></span><span class="corner top-right"></span>
+                <span class="corner bottom-left"></span><span class="corner bottom-right"></span>
+              </div>
+              <h2 id="downloadEmptyTitle">Your video will appear here</h2>
+              <p id="downloadEmptyCopy">Paste a link, then download the file.</p>
+            </div>
+
+            <div class="loading-state" id="downloadLoading" hidden>
+              <div class="scan-photo scan-video">
+                <span class="scan-line"></span>
+              </div>
+              <h2>Working on your video</h2>
+              <p id="downloadLoadingMessage">Fetching video details...</p>
+              <div class="progress-track"><span id="downloadProgressBar"></span></div>
+            </div>
+
+            <div class="finished-state video-ready" id="downloadReady" hidden>
+              <img id="videoThumb" class="video-thumb" alt="Video thumbnail" />
+              <h2 id="videoTitle">Video</h2>
+              <p id="videoMeta"></p>
+            </div>
+          </div>
+
+          <div class="result-actions" id="downloadActions" hidden>
+            <button class="download-button" id="saveVideoButton" type="button">
+              <svg viewBox="0 0 20 20"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16h12"/></svg>
+              DOWNLOAD VIDEO
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section class="details-strip reveal delay-6" id="detailsStrip">
         <div><strong>4×6</strong><span>CM FORMAT</span></div>
         <span class="divider"></span>
         <div><strong>300</strong><span>PRINT DPI</span></div>
